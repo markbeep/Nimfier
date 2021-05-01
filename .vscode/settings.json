@@ -1,5 +1,0 @@
-{
-    "code-runner.executorMap": {
-        "nim": "nim compile -d:ssl -r --verbosity:0 --hints:off $fullFileName"
-    }
-}
