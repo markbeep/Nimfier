@@ -22,12 +22,15 @@ proc commandHandler(content: var string, prefix: string): seq[string] =
     return args
 
 
+proc edit(m:Message, content:string): Future[Message] {.async.} =
+    discard await discord.api.editMessage(channel_id=m.channel_id, message_id=m.id, content=content)
+
 # Ping command to see ping of the bot
 proc ping(m:Message, args:seq[string]): Future[Message] {.async.} =
     let t0 = getTime()
     let msg = await discord.api.sendMessage(m.channel_id, "ayy lmao")
     let delta = getTime() - t0
-    discard await discord.api.editMessage(channel_id=msg.channel_id, message_id=msg.id, content="Ping: " & $delta.inMilliseconds & " ms.")
+    discard await msg.edit(content="Ping: " & $delta.inMilliseconds & " ms.")
 
 
 # Event for message_create
